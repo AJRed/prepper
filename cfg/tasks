@@ -1,0 +1,4 @@
+tools/user_account_cfg.ps1
+tools/init_winget.ps1
+tools/install_prep.ps1
+tools/reset_exec_policy.ps1

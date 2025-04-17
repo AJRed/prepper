@@ -1,0 +1,9 @@
+Powershell script to prepare a windows computer for sale.
+
+steps:
+			init: 	Confirm winget version and upgrade if
+					necessary using local package.
+
+		de-bloat:	Remove default windows bloatware / crap
+
+	install-prep:	Install recommended browser and office suite (Currently Firefox and Libre Office)
