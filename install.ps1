@@ -14,7 +14,6 @@ $exec = @("echo", "cp")
 $args = @(
     "`"cp -r $driveLetter\scripts\powershell\prepper C:\`"",
     "-r $driveLetter\scripts\powershell\prepper C:\",
-    "`"Asshole`""
 )
 
 $cmd = [string]::Format('{0} {1}',$exec[$mode], $args[$mode])
