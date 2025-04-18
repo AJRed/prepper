@@ -2,7 +2,8 @@
 
 Windows prep utility
 
-Steps to run:
-powershell > Set-ExecutionPolicy Unrestricted\\n
-powershell > install.ps1\\n
-powershell > 'C:\\prepper\\prepper.ps1'\\n
+### Steps to run
+
+1. powershell > Set-ExecutionPolicy Unrestricted
+1. powershell > install.ps1
+1. powershell > 'C:\\prepper\\prepper.ps1'
