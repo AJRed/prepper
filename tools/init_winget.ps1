@@ -35,7 +35,7 @@ function Test-Winget
 	return 0
 }
 
-if ( -Not $(Test-Winget))
+if ( -Not $(Test-Winget)[-1])
 {
 	Write-Host "Winget setup complete"
 	return 0
