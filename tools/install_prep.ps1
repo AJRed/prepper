@@ -18,17 +18,17 @@ if (Get-Command winget -ErrorAction SilentlyContinue)
 {
 	foreach($package in $PACKAGES)
 	{
-        	Write-Host "Installing package: $package" -ForegroundColor Magenta
+		Write-Host "Installing package: $package" -ForegroundColor Magenta
 		$pkg = Winget list --id $package --accept-package-agreements --accept-source-agreements --disable-interactivity
 		$error_status = $?
-		Write-Host($error_status)
-        	if ($error_status)
-        	{
-            		Write-Host "$package already instaled"
-        	} else {
+		if ($error_status)
+		{
+			Write-Host "$package already instaled"
+		} else
+		{
 			Write-Host "Installing package: $package" -ForegroundColor Magenta
 			winget install $package --accept-package-agreements --accept-source-agreements --disable-interactivity
-        	}
+		}
 	}
 	return 0
 } else
