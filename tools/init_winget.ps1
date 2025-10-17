@@ -1,26 +1,47 @@
-if (Get-Command winget -ErrorAction SilentlyContinue)
-{
-	$wingetver = winget -v
-	$latestwingetver = "v1.8.1911"
-	$ROOT = Get-Location
-	Write-Host "Latest winget version: $latestwingetver"
-	Write-Host "Detected winget version: $wingetver"
+# Script by Andrew Ruedisueli
 
-	if ($wingetver -eq $latestwingetver)
+# Github release download snippet (Modified from original)
+# https://gist.github.com/MarkTiedemann/c0adc1701f3f5c215fc2c2d5b1d5efd3
+
+function Test-Winget
+{
+	if (Get-Command winget -ErrorAction SilentlyContinue)
 	{
-		Write-Host "Winget up to date. Skipping update."
-		return 0
+		# Winget command exists
+		Write-Host "Winget already installed. Upgrading to latest version"
+		winget upgrade winget
+
 	} else
 	{
-		Write-Host "New winget version. Updating winget."
-		Set-Location $PSScriptRoot
-		Add-AppxPackage $ROOT/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
-		Set-Location $ROOT
-		return 0
+		# Winget command does NOT exist
+		# Download latest package from Github
+		Write-Host "Winget cmdlet not found. Downloading lates release from Github"
+		$repo = "microsoft/winget-cli"
+		$file = "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+
+		$releases = "https://api.github.com/repos/$repo/releases"
+
+		Write-Host Determining latest release
+		$tag = (Invoke-WebRequest $releases | ConvertFrom-Json)[0].tag_name
+
+		$download = "https://github.com/$repo/releases/download/$tag/$file"
+
+		Write-Host Dowloading latest release
+		Invoke-WebRequest $download -Out $file
+
+		Add-AppxPackage $file
+
 	}
+	return 0
+}
+
+if ( -Not $(Test-Winget))
+{
+	Write-Host "Winget setup complete"
+	return 0
 } else
 {
-	Write-Host "Winget not installed. Assuming test run" -ForegroundColor Yellow
-	return 0
+	Write-Host "Winget error" -ForegroundColor Yellow
+	return 1
 }
 
